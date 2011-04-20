@@ -17,3 +17,4 @@
 # limitations under the License.
 #
 Chef::Log.info("Hello World!")
+Chef::Log.info("From Shane's Repo!")
