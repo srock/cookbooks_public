@@ -1,12 +1,16 @@
-log "IP is #{node[:ipaddress]}"
+srv_col_name = "testserver"
+search_tag = "server:testing=tag"
 
-right_link_tag "web:active=true"
-right_link_tag "web:ip=#{node[:ipaddress]}"
-
-server_collection "active_login_servers" do
-  tags "rs_login:state=active"
+server_collection srv_col_name do
+  tags search_tag
 end
 
-node[:server_collection].each do |tag|
-  log "Server tag: #{tag}"
+ruby_block "Spit out tags" do
+  block do
+    node[:server_collection][srv_col_name].each do |server|
+      server.each do |tag|
+        Chef::Log.info("Server #{server} had tag #{tag}")
+      end
+    end
+  end
 end
